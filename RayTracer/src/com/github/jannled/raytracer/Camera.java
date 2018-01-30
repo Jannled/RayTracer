@@ -43,9 +43,9 @@ public class Camera
 	{
 		for(Model m : scene.getModels())
 		{
-			for(int i=0; i<m.getVertices().length/3; i++)
+			for(int i=0; i<m.getTriangles().length; i++)
 			{
-				
+				 
 			}
 		}
 	}

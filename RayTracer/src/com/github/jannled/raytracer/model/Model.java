@@ -10,7 +10,7 @@ public class Model
 		this.vertices = vertices;
 	}
 	
-	public Triangle[] getVertices()
+	public Triangle[] getTriangles()
 	{
 		return vertices;
 	}
