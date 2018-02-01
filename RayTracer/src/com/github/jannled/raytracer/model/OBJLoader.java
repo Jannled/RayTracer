@@ -42,7 +42,7 @@ public class OBJLoader implements Loader
 		double[] vertices = new double[svertices.size()*3];
 		float[] normals = new float[snormals.size()*3];
 		float[] textures = new float[stextures.size()*2];
-		int[] faces = new int[sfaces.size()*3];
+		int[][] faces = new int[sfaces.size()][3];
 		
 		for(int i=0; i<vertices.length/3; i++)
 		{
@@ -70,22 +70,17 @@ public class OBJLoader implements Loader
 		for(int i=0; i<faces.length/3; i++)
 		{
 			String[] values = sfaces.get(i).split(" ");
-			faces[i*3+0] = Short.parseShort(values[0].split("/")[0]);
-			faces[i*3+1] = Short.parseShort(values[1].split("/")[0]);
-			faces[i*3+2] = Short.parseShort(values[2].split("/")[0]);
+			faces[i][0] = Short.parseShort(values[0].split("/")[0]);
+			faces[i][1] = Short.parseShort(values[1].split("/")[0]);
+			faces[i][2] = Short.parseShort(values[2].split("/")[0]);
 		}
 		
-		Triangle[] triangles = new Triangle[vertices.length/3];
+		Vector[] points = new Vector[vertices.length/3];
 		for(int i=0; i<vertices.length/9; i++)
 		{
-			triangles[i] = new Triangle(new Vector[] 
-				{
-					new Vector(vertices[i+0], vertices[i+1], vertices[i+2]),
-					new Vector(vertices[i+3], vertices[i+4], vertices[i+5]), 
-					new Vector(vertices[i+5], vertices[i+6], vertices[i+7])
-				});
+			
 		}
-		return new Model(triangles);
+		return new Model(points, faces);
 	}
 	
 	private static void preprocess(BufferedReader r)

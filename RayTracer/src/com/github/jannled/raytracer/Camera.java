@@ -43,9 +43,9 @@ public class Camera
 	{
 		for(Model m : scene.getModels())
 		{
-			for(int i=0; i<m.getTriangles().length; i++)
+			for(int i=0; i<m.getFaces().length; i++)
 			{
-				 
+				 double x = (- ray.getStart().getValue(0) * m.getNormals()[i].getValue(0) - ray.getStart().getValue(1) * m.getNormals()[i].getValue(1) - ray.getStart().getValue(0) * m.getNormals()[i].getValue(0));
 			}
 		}
 	}
