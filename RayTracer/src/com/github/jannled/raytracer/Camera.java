@@ -43,9 +43,26 @@ public class Camera
 	{
 		for(Model m : scene.getModels())
 		{
+			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
 			{
-				 double x = (- ray.getStart().getValue(0) * m.getNormals()[i].getValue(0) - ray.getStart().getValue(1) * m.getNormals()[i].getValue(1) - ray.getStart().getValue(0) * m.getNormals()[i].getValue(0));
+				if()
+				{
+					double zahler = (- ray.getStart().getValue(0) * m.getNormals()[i].getValue(0) - ray.getStart().getValue(1) * m.getNormals()[i].getValue(1) - ray.getStart().getValue(0) * m.getNormals()[i].getValue(0) + m.getPnConst(i));
+					double nenner = ray.getDirection().getValue(0) * m.getNormals()[i].getValue(0) + ray.getDirection().getValue(1) * m.getNormals()[i].getValue(1) + ray.getDirection().getValue(2) * m.getNormals()[i].getValue(2);
+					
+					//Check if ray is parallel to the face.
+					if(nenner != 0)
+					{
+						double x = zahler / nenner;
+						
+						//If backface culling is enabled drop the specified faces
+						if(!(m.isBackfaceCulling() && x < 0))
+						{
+							
+						}
+					}
+				}
 			}
 		}
 	}

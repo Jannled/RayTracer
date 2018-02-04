@@ -39,25 +39,21 @@ public class OBJLoader implements Loader
 	{
 		preprocess(in);
 		
-		double[] vertices = new double[svertices.size()*3];
-		float[] normals = new float[snormals.size()*3];
+		Vector[] vertices = new Vector[svertices.size()];
+		Vector[] normals = new Vector[snormals.size()];
 		float[] textures = new float[stextures.size()*2];
 		int[][] faces = new int[sfaces.size()][3];
 		
 		for(int i=0; i<vertices.length/3; i++)
 		{
 			String[] values = svertices.get(i).split(" ");
-			vertices[i*3+0] = Float.parseFloat(values[0]);
-			vertices[i*3+1] = Float.parseFloat(values[1]);
-			vertices[i*3+2] = Float.parseFloat(values[2]);
+			vertices[i] = new Vector(Float.parseFloat(values[0]), Float.parseFloat(values[1]), Float.parseFloat(values[2]));
 		}
 		
-		for(int i=0; i<normals.length/3; i++)
+		for(int i=0; i<normals.length; i++)
 		{
 			String[] values = snormals.get(i).split(" ");
-			normals[i*3+0] = Float.parseFloat(values[0]);
-			normals[i*3+1] = Float.parseFloat(values[1]);
-			normals[i*3+2] = Float.parseFloat(values[2]);
+			normals[i] = new Vector(Float.parseFloat(values[0]), Float.parseFloat(values[1]), Float.parseFloat(values[2]));
 		}
 		
 		for(int i=0; i<textures.length/2; i++)
@@ -75,12 +71,7 @@ public class OBJLoader implements Loader
 			faces[i][2] = Short.parseShort(values[2].split("/")[0]);
 		}
 		
-		Vector[] points = new Vector[vertices.length/3];
-		for(int i=0; i<vertices.length/9; i++)
-		{
-			
-		}
-		return new Model(points, faces);
+		return new Model(vertices, normals, faces);
 	}
 	
 	private static void preprocess(BufferedReader r)
