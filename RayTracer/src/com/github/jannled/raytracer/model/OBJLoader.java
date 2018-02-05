@@ -42,7 +42,7 @@ public class OBJLoader implements Loader
 		Vector[] vertices = new Vector[svertices.size()];
 		Vector[] normals = new Vector[snormals.size()];
 		float[] textures = new float[stextures.size()*2];
-		int[][] faces = new int[sfaces.size()][3];
+		Face[] faces = new Face[sfaces.size()];
 		
 		for(int i=0; i<vertices.length/3; i++)
 		{
@@ -66,12 +66,10 @@ public class OBJLoader implements Loader
 		for(int i=0; i<faces.length/3; i++)
 		{
 			String[] values = sfaces.get(i).split(" ");
-			faces[i][0] = Short.parseShort(values[0].split("/")[0]);
-			faces[i][1] = Short.parseShort(values[1].split("/")[0]);
-			faces[i][2] = Short.parseShort(values[2].split("/")[0]);
+			faces[i] = new Face(new int[] {Short.parseShort(values[0].split("/")[0]), Short.parseShort(values[1].split("/")[0]), Short.parseShort(values[2].split("/")[0])}, normals[i]);
 		}
 		
-		return new Model(vertices, normals, faces);
+		return new Model(vertices, faces);
 	}
 	
 	private static void preprocess(BufferedReader r)
