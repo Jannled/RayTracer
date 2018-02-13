@@ -47,9 +47,9 @@ public class Camera
 			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
 			{	
-				int[] mx = ;
-				int[] my = null;
-				int[] mz = null;
+				int[] mx = new int[] {, };
+				int[] my = new int[] {, };
+				int[] mz = new int[] {, };
 			}
 		}
 		
