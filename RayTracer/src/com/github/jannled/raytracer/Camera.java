@@ -10,8 +10,9 @@ import com.github.jannled.raytracer.ray.Line;
  * The camera for the raytracer and source for the rays, call <code>render()</code> to render the scene.
  */
 public class Camera
-{	
+{
 	int width, height, distance;
+	int renderResult[][] = new int[width * height][3]; 
 	
 	public Camera(int width, int height, int distance)
 	{
@@ -35,21 +36,23 @@ public class Camera
 			
 			Line ray = new Line(zero, raster);
 			
-			raytrace(scene, ray);
+			renderResult[i] = raytrace(scene, ray);
 		}
 	}
 	
-	public void raytrace(Scene scene, Line ray)
+	public int[] raytrace(Scene scene, Line ray)
 	{
 		for(Model m : scene.getModels())
 		{
 			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
-			{
-				int[] f1 = ;
-				int[] f2 = ;
-				int[] f3 = ;
+			{	
+				int[] mx = ;
+				int[] my = null;
+				int[] mz = null;
 			}
 		}
+		
+		return new int[] {255, 0, 255};
 	}
 }
