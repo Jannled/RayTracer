@@ -1,5 +1,7 @@
 package com.github.jannled.raytracer;
 
+import java.awt.image.BufferedImage;
+
 import com.github.jannled.lib.math.Vector;
 import com.github.jannled.raytracer.model.Model;
 import com.github.jannled.raytracer.ray.Line;
@@ -13,12 +15,14 @@ public class Camera
 {
 	int width, height, distance;
 	int renderResult[][] = new int[width * height][3]; 
+	public BufferedImage canvas; 
 	
 	public Camera(int width, int height, int distance)
 	{
 		this.width = width;
 		this.height = height;
 		this.distance = distance;
+		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
 	}
 	
 	public void render(Scene scene)
@@ -47,12 +51,14 @@ public class Camera
 			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
 			{	
-				int[] mx = new int[] {, };
-				int[] my = new int[] {, };
-				int[] mz = new int[] {, };
+				if(m.getFaces()[i].getMinMax()[0][0] > m.getFaces()[i].getMinMax()[1][1] ||
+						m.getFaces()[i].getMinMax()[0][0] > m.getFaces()[i].getMinMax()[2][1])
+				{
+					
+				}
 			}
 		}
 		
-		return new int[] {255, 0, 255};
+		return new int[] {0, 0, 0};
 	}
 }

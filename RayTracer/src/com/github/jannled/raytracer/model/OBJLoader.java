@@ -15,7 +15,6 @@ import com.github.jannled.lib.math.Vector;
  */
 public class OBJLoader implements Loader
 {
-	
 	private static String COMMENT = "#";
 	private static String VERTEX = "v";
 	private static String TEXTURE = "vt";
@@ -44,7 +43,7 @@ public class OBJLoader implements Loader
 		float[] textures = new float[stextures.size()*2];
 		Face[] faces = new Face[sfaces.size()];
 		
-		for(int i=0; i<vertices.length/3; i++)
+		for(int i=0; i<vertices.length; i++)
 		{
 			String[] values = svertices.get(i).split(" ");
 			vertices[i] = new Vector(Float.parseFloat(values[0]), Float.parseFloat(values[1]), Float.parseFloat(values[2]));
@@ -63,7 +62,7 @@ public class OBJLoader implements Loader
 			textures[i*2+1] = Float.parseFloat(values[1]);
 		}
 		
-		for(int i=0; i<faces.length/3; i++)
+		for(int i=0; i<faces.length; i++)
 		{
 			String[] values = sfaces.get(i).split(" ");
 			faces[i] = new Face(new int[] {Short.parseShort(values[0].split("/")[0]), Short.parseShort(values[1].split("/")[0]), Short.parseShort(values[2].split("/")[0])}, normals[i], vertices);
