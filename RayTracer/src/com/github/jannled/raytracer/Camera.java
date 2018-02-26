@@ -14,7 +14,7 @@ import com.github.jannled.raytracer.ray.Line;
 public class Camera
 {
 	int width, height, distance;
-	int renderResult[][] = new int[width * height][3]; 
+	int renderResult[][]; 
 	public BufferedImage canvas; 
 	
 	public Camera(int width, int height, int distance)
@@ -22,7 +22,8 @@ public class Camera
 		this.width = width;
 		this.height = height;
 		this.distance = distance;
-		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+		this.renderResult = new int[width * height][3];
+		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	}
 	
 	public void render(Scene scene)
@@ -41,6 +42,9 @@ public class Camera
 			Line ray = new Line(zero, raster);
 			
 			renderResult[i] = raytrace(scene, ray);
+			int x = i%width;
+			int y = i/width;
+			canvas.getRaster().setPixel(i%width, i/width, renderResult[i]);
 		}
 	}
 	
@@ -51,11 +55,7 @@ public class Camera
 			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
 			{	
-				if(m.getFaces()[i].getMinMax()[0][0] > m.getFaces()[i].getMinMax()[1][1] ||
-						m.getFaces()[i].getMinMax()[0][0] > m.getFaces()[i].getMinMax()[2][1])
-				{
-					
-				}
+				
 			}
 		}
 		
