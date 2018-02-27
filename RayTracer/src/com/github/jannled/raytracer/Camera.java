@@ -17,20 +17,20 @@ public class Camera
 	int width, height, distance;
 	int renderResult[][]; 
 	public BufferedImage canvas; 
+	private Vector position;
 	
 	public Camera(int width, int height, int distance)
 	{
 		this.width = width;
 		this.height = height;
 		this.distance = distance;
+		this.position = new Vector(0, 0, -10);
 		this.renderResult = new int[width * height][3];
 		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	}
 	
 	public void render(Scene scene)
-	{
-		Vector zero = new Vector(3);
-		
+	{	
 		for(int i=0; i<width*height; i++)
 		{
 			double posx = (i%width - width/2);
@@ -38,9 +38,9 @@ public class Camera
 			double posy = (((int) i/width) - height/2);
 			posy = posy / (height / 2);
 			
-			Vector raster = new Vector(posx, posy, distance);
+			Vector raster = new Vector(posx, posy, distance).add(position);
 			
-			Line ray = new Line(zero, raster);
+			Line ray = new Line(position, raster);
 			
 			renderResult[i] = raytrace(scene, ray);
 			canvas.getRaster().setPixel(i%width, i/width, renderResult[i]);
@@ -71,7 +71,7 @@ public class Camera
 		{
 			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
-			{	
+			{
 				double mxmin = (m.getFaces()[i].getMin(Face.X) - ray.getStart().X()) / ray.getDirection().X();
 				double mxmax = (m.getFaces()[i].getMax(Face.X) - ray.getStart().X()) / ray.getDirection().X();
 				double mymin = (m.getFaces()[i].getMin(Face.Y) - ray.getStart().Y()) / ray.getDirection().Y();
@@ -79,19 +79,22 @@ public class Camera
 				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				
+				double test1 = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z());
+				double test2 = ray.getDirection().Z();
+				
 				if(mxmin > mymax || mxmin > mzmax) 
 				{
-					pixel[0] = pixel[0] + 25;
+					pixel[0] = pixel[0] + 50;
 					continue;
 				}
 				if(mymin > mxmax || mymin > mzmax)
 				{
-					pixel[1] = pixel[1] + 25;
+					pixel[1] = pixel[1] + 50;
 					continue;
 				}
 				if(mzmin > mxmax || mzmin > mzmax)
 				{
-					pixel[2] = pixel[2] + 25;
+					pixel[2] = pixel[2] + 50;
 					continue;
 				}
 			}
