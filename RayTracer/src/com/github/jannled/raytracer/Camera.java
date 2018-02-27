@@ -79,11 +79,21 @@ public class Camera
 				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				
-				if(mxmin > mymax || mxmin > mzmax) pixel[0] = pixel[0] + 10;
-				if(mymin > mxmax || mymin > mzmax) pixel[1] = pixel[1] + 10;
-				if(mzmin > mxmax || mzmin > mzmax) pixel[2] = pixel[2] + 10;
-				
-				pixel[0] = pixel[0] + 10;
+				if(mxmin > mymax || mxmin > mzmax) 
+				{
+					pixel[0] = pixel[0] + 25;
+					continue;
+				}
+				if(mymin > mxmax || mymin > mzmax)
+				{
+					pixel[1] = pixel[1] + 25;
+					continue;
+				}
+				if(mzmin > mxmax || mzmin > mzmax)
+				{
+					pixel[2] = pixel[2] + 25;
+					continue;
+				}
 			}
 		}
 		

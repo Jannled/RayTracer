@@ -65,7 +65,8 @@ public class OBJLoader implements Loader
 		for(int i=0; i<faces.length; i++)
 		{
 			String[] values = sfaces.get(i).split(" ");
-			faces[i] = new Face(new int[] {Short.parseShort(values[0].split("/")[0]), Short.parseShort(values[1].split("/")[0]), Short.parseShort(values[2].split("/")[0])}, normals[i], vertices);
+			//TODO Enable normal loading
+			faces[i] = new Face(new int[] {Short.parseShort(values[0].split("/")[0]), Short.parseShort(values[1].split("/")[0]), Short.parseShort(values[2].split("/")[0])}, null, vertices);
 		}
 		
 		return new Model(vertices, faces);

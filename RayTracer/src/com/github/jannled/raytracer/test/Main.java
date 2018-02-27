@@ -23,7 +23,7 @@ public class Main
 	
 	public Main()
 	{
-		Model m = OBJLoader.loadModel(Main.class.getResourceAsStream("Icosphere.obj"));
+		Model m = OBJLoader.loadModel(Main.class.getResourceAsStream("Triangle.obj"));
 		scene.addModel(m);
 		camera.render(scene);
 		
