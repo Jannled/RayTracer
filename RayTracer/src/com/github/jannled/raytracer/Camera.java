@@ -3,6 +3,7 @@ package com.github.jannled.raytracer;
 import java.awt.image.BufferedImage;
 
 import com.github.jannled.lib.math.Vector;
+import com.github.jannled.raytracer.model.Face;
 import com.github.jannled.raytracer.model.Model;
 import com.github.jannled.raytracer.ray.Line;
 
@@ -42,23 +43,55 @@ public class Camera
 			Line ray = new Line(zero, raster);
 			
 			renderResult[i] = raytrace(scene, ray);
-			int x = i%width;
-			int y = i/width;
 			canvas.getRaster().setPixel(i%width, i/width, renderResult[i]);
 		}
 	}
 	
+	/* a + m * x = rx	(rx - a) / x = mx;
+	 * b + m * y = ry	(ry - b) / y = my;
+	 * c + m * z = rz	(rz - c) / z = mz;
+	 * 
+	 * a/b/c = ray equation
+	 * x/y/z = ray equation
+	 * rx/ry/rz = min and max per face 
+	 * m = wanted
+	*/
+	
+	/**
+	 * Compute for each pixel.
+	 * @param scene The Scene containing the objects to render.
+	 * @param ray The ray equation.
+	 * @return The three color component.
+	 */
 	public int[] raytrace(Scene scene, Line ray)
 	{
+		int[] pixel = new int[3];
+		
 		for(Model m : scene.getModels())
 		{
 			//Compute for each face
 			for(int i=0; i<m.getFaces().length; i++)
 			{	
+				double mxmin = (m.getFaces()[i].getMin(Face.X) - ray.getStart().X()) / ray.getDirection().X();
+				double mxmax = (m.getFaces()[i].getMax(Face.X) - ray.getStart().X()) / ray.getDirection().X();
+				double mymin = (m.getFaces()[i].getMin(Face.Y) - ray.getStart().Y()) / ray.getDirection().Y();
+				double mymax = (m.getFaces()[i].getMax(Face.Y) - ray.getStart().Y()) / ray.getDirection().Y();
+				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
+				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				
+				if(mxmin > mymax || mxmin > mzmax) pixel[0] = pixel[0] + 10;
+				if(mymin > mxmax || mymin > mzmax) pixel[1] = pixel[1] + 10;
+				if(mzmin > mxmax || mzmin > mzmax) pixel[2] = pixel[2] + 10;
+				
+				pixel[0] = pixel[0] + 10;
 			}
 		}
 		
-		return new int[] {0, 0, 0};
+		return pixel;
+	}
+	
+	public BufferedImage getCanvas()
+	{
+		return canvas;
 	}
 }

@@ -6,6 +6,10 @@ import com.github.jannled.lib.math.Vector;
 
 public class Face 
 {
+	public static final byte X = 0;
+	public static final byte Y = 0;
+	public static final byte Z = 0;
+	
 	private int[] indices;
 	private Vector normal;
 	private double[][] minMax;
@@ -30,6 +34,16 @@ public class Face
 	public double[][] getMinMax()
 	{
 		return minMax;
+	}
+	
+	public double getMin(byte coord)
+	{
+		return minMax[coord][0];
+	}
+	
+	public double getMax(byte coord)
+	{
+		return minMax[coord][1];
 	}
 	
 	private void calculateMinMax(Vector[] vertices)
