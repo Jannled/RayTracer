@@ -2,6 +2,7 @@ package com.github.jannled.raytracer;
 
 import java.awt.image.BufferedImage;
 
+import com.github.jannled.lib.Print;
 import com.github.jannled.lib.math.Vector;
 import com.github.jannled.raytracer.model.Face;
 import com.github.jannled.raytracer.model.Model;
@@ -24,13 +25,13 @@ public class Camera
 		this.width = width;
 		this.height = height;
 		this.distance = distance;
-		this.position = new Vector(0, 0, -10);
+		this.position = new Vector(0, 0, 0);
 		this.renderResult = new int[width * height][3];
 		canvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	}
 	
 	public void render(Scene scene)
-	{	
+	{
 		for(int i=0; i<width*height; i++)
 		{
 			double posx = (i%width - width/2);
@@ -79,24 +80,29 @@ public class Camera
 				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				
-				double test1 = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z());
-				double test2 = ray.getDirection().Z();
+				Print.m("[" + mxmin + "; " + mxmax + "]" + "	[" + mymin + "; " + mymax + "]" + "	[" + mzmin + "; " + mzmax + "]");
 				
-				if(mxmin > mymax || mxmin > mzmax) 
+				if(mxmin > mymax || mxmin > mzmax || mxmin <= 0 || mxmax <= 0)
 				{
-					pixel[0] = pixel[0] + 50;
+					//if(mxmin <= 0 || mxmax <= 0) Print.m("x = " + mxmin + "|" + mxmax);
+					//pixel[0] = pixel[0] + 50;
 					continue;
 				}
-				if(mymin > mxmax || mymin > mzmax)
+				if(mymin > mxmax || mymin > mzmax || mymin <= 0 || mymax <= 0)
 				{
-					pixel[1] = pixel[1] + 50;
+					//if(mymin <= 0 || mymax <= 0) Print.m("y = " + mymin + "|" + mymax);
+					//pixel[1] = pixel[1] + 50;
 					continue;
 				}
-				if(mzmin > mxmax || mzmin > mzmax)
+				if(mzmin > mxmax || mzmin > mzmax || mzmin <= 0 || mzmax <= 0)
 				{
-					pixel[2] = pixel[2] + 50;
+					//if(mzmin <= 0 || mzmax <= 0) Print.m("z = " + mzmin + "|" + mzmax);
+					//pixel[2] = pixel[2] + 50;
 					continue;
 				}
+				pixel[0] = pixel[0] + 20;
+				pixel[1] = pixel[1] + 20;
+				pixel[2] = pixel[2] + 20;
 			}
 		}
 		

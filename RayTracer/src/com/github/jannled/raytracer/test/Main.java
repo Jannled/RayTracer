@@ -6,15 +6,16 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.github.jannled.lib.Print;
 import com.github.jannled.raytracer.Camera;
 import com.github.jannled.raytracer.Scene;
 import com.github.jannled.raytracer.model.Model;
 import com.github.jannled.raytracer.model.OBJLoader;
 
 public class Main
-{
-	public static final int WIDTH = 256;
-	public static final int HEIGHT = 256;
+{	
+	public static final int WIDTH = 128;
+	public static final int HEIGHT = 128;
 	
 	Camera camera = new Camera(WIDTH, HEIGHT, 10);
 	Scene scene = new Scene();
@@ -33,7 +34,7 @@ public class Main
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(render, BorderLayout.CENTER);
 		frame.setVisible(true);
-		
+		Print.setOutputLevel(Print.ALL);
 	}
 	
 	public static void main(String[] args)

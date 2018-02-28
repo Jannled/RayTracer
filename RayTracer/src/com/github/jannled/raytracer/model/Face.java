@@ -7,8 +7,8 @@ import com.github.jannled.lib.math.Vector;
 public class Face 
 {
 	public static final byte X = 0;
-	public static final byte Y = 0;
-	public static final byte Z = 0;
+	public static final byte Y = 1;
+	public static final byte Z = 2;
 	
 	private int[] indices;
 	private Vector normal;
