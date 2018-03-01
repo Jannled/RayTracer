@@ -32,5 +32,11 @@ public class Line
 		this.direction = direction;
 	}
 	
-	
+	@Override
+	public String toString() 
+	{
+		return 	start.X() + "	+ m * " + direction.X() + "\n" +
+				start.Y() + "	+ m * " + direction.Y() + "\n" +
+				start.Z() + "	+ m * " + direction.Z();
+	}
 }

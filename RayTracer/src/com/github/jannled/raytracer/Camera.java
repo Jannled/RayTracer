@@ -13,7 +13,7 @@ import com.github.jannled.raytracer.ray.Line;
  * @author Jannled
  * The camera for the raytracer and source for the rays, call <code>render()</code> to render the scene.
  */
-public class Camera
+public class Camera extends JTracer
 {
 	int width, height, distance;
 	int renderResult[][]; 
@@ -57,57 +57,6 @@ public class Camera
 	 * rx/ry/rz = min and max per face 
 	 * m = wanted
 	*/
-	
-	/**
-	 * Compute for each pixel.
-	 * @param scene The Scene containing the objects to render.
-	 * @param ray The ray equation.
-	 * @return The three color component.
-	 */
-	public int[] raytrace(Scene scene, Line ray)
-	{
-		int[] pixel = new int[3];
-		
-		for(Model m : scene.getModels())
-		{
-			//Compute for each face
-			for(int i=0; i<m.getFaces().length; i++)
-			{
-				double mxmin = (m.getFaces()[i].getMin(Face.X) - ray.getStart().X()) / ray.getDirection().X();
-				double mxmax = (m.getFaces()[i].getMax(Face.X) - ray.getStart().X()) / ray.getDirection().X();
-				double mymin = (m.getFaces()[i].getMin(Face.Y) - ray.getStart().Y()) / ray.getDirection().Y();
-				double mymax = (m.getFaces()[i].getMax(Face.Y) - ray.getStart().Y()) / ray.getDirection().Y();
-				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
-				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
-				
-				Print.m("[" + mxmin + "; " + mxmax + "]" + "	[" + mymin + "; " + mymax + "]" + "	[" + mzmin + "; " + mzmax + "]");
-				
-				if(mxmin > mymax || mxmin > mzmax || mxmin <= 0 || mxmax <= 0)
-				{
-					//if(mxmin <= 0 || mxmax <= 0) Print.m("x = " + mxmin + "|" + mxmax);
-					//pixel[0] = pixel[0] + 50;
-					continue;
-				}
-				if(mymin > mxmax || mymin > mzmax || mymin <= 0 || mymax <= 0)
-				{
-					//if(mymin <= 0 || mymax <= 0) Print.m("y = " + mymin + "|" + mymax);
-					//pixel[1] = pixel[1] + 50;
-					continue;
-				}
-				if(mzmin > mxmax || mzmin > mzmax || mzmin <= 0 || mzmax <= 0)
-				{
-					//if(mzmin <= 0 || mzmax <= 0) Print.m("z = " + mzmin + "|" + mzmax);
-					//pixel[2] = pixel[2] + 50;
-					continue;
-				}
-				pixel[0] = pixel[0] + 20;
-				pixel[1] = pixel[1] + 20;
-				pixel[2] = pixel[2] + 20;
-			}
-		}
-		
-		return pixel;
-	}
 	
 	public BufferedImage getCanvas()
 	{
