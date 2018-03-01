@@ -2,10 +2,7 @@ package com.github.jannled.raytracer;
 
 import java.awt.image.BufferedImage;
 
-import com.github.jannled.lib.Print;
 import com.github.jannled.lib.math.Vector;
-import com.github.jannled.raytracer.model.Face;
-import com.github.jannled.raytracer.model.Model;
 import com.github.jannled.raytracer.ray.Line;
 
 /**
