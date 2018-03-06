@@ -32,24 +32,25 @@ public class JTracer implements Raytracer
 				
 				//Print.m("[" + mxmin + "; " + mxmax + "]" + "	[" + mymin + "; " + mymax + "]" + "	[" + mzmin + "; " + mzmax + "]");
 				
-				if(mxmin > mymax || mxmin > mzmax || mxmin <= 0 || mxmax <= 0)
+				if(mxmin > mymax || mxmin > mzmax)
 				{
-					System.out.println("X failed for: \n" + ray.toString());
+					pixel[0] = pixel[0] + 50;
 					continue;
 				}
-				if(mymin > mxmax || mymin > mzmax || mymin <= 0 || mymax <= 0)
+				if(mymin > mxmax || mymin > mzmax)
 				{
-					System.out.println("Y failed for: \n" + ray.toString());
+					pixel[1] = pixel[1] + 50;
 					continue;
 				}
-				if(mzmin > mxmax || mzmin > mzmax || mzmin <= 0 || mzmax <= 0)
+				if(mzmin > mxmax || mzmin > mymax)
 				{
-					System.out.println("Z failed for: \n" + ray.toString());
+					pixel[2] = pixel[2] + 50;
 					continue;
 				}
-				pixel[0] = pixel[0] + 20;
-				pixel[1] = pixel[1] + 20;
-				pixel[2] = pixel[2] + 20;
+				
+				pixel[0] = 255;
+				pixel[1] = 255;
+				pixel[2] = 255;
 			}
 		}
 		

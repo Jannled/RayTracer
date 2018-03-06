@@ -2,6 +2,7 @@ package com.github.jannled.raytracer;
 
 import java.awt.image.BufferedImage;
 
+import com.github.jannled.lib.Print;
 import com.github.jannled.lib.math.Vector;
 import com.github.jannled.raytracer.ray.Line;
 
@@ -43,18 +44,9 @@ public class Camera extends JTracer
 			renderResult[i] = raytrace(scene, ray);
 			canvas.getRaster().setPixel(i%width, i/width, renderResult[i]);
 		}
+		Print.m("Frame rendered!");
 	}
-	
-	/* a + m * x = rx	(rx - a) / x = mx;
-	 * b + m * y = ry	(ry - b) / y = my;
-	 * c + m * z = rz	(rz - c) / z = mz;
-	 * 
-	 * a/b/c = ray equation
-	 * x/y/z = ray equation
-	 * rx/ry/rz = min and max per face 
-	 * m = wanted
-	*/
-	
+
 	public BufferedImage getCanvas()
 	{
 		return canvas;

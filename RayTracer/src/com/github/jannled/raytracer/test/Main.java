@@ -1,6 +1,7 @@
 package com.github.jannled.raytracer.test;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
@@ -14,8 +15,8 @@ import com.github.jannled.raytracer.model.OBJLoader;
 
 public class Main
 {	
-	public static final int WIDTH = 128;
-	public static final int HEIGHT = 128;
+	public static final int WIDTH = 32;
+	public static final int HEIGHT = 32;
 	
 	Camera camera = new Camera(WIDTH, HEIGHT, 10);
 	Scene scene = new Scene();
@@ -34,12 +35,15 @@ public class Main
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.getContentPane().add(render, BorderLayout.CENTER);
 		frame.setVisible(true);
-		Print.setOutputLevel(Print.ALL);
+		frame.setMinimumSize(new Dimension(256, 256));
+		
+		render.repaint();
 	}
 	
 	public static void main(String[] args)
 	{
+		Print.setOutputLevel(Print.ALL);
+		Print.d(Arrays.toString(args));
 		new Main();
-		System.out.println(Arrays.toString(args));
 	}
 }
