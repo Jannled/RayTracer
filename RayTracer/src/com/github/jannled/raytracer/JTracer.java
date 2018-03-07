@@ -1,6 +1,7 @@
 package com.github.jannled.raytracer;
 
 import com.github.jannled.lib.Print;
+import com.github.jannled.lib.math.Maths;
 import com.github.jannled.raytracer.model.Face;
 import com.github.jannled.raytracer.model.Model;
 import com.github.jannled.raytracer.ray.Line;
@@ -18,6 +19,8 @@ public class JTracer implements Raytracer
 	{
 		int[] pixel = new int[3];
 		
+		double temp;
+		
 		//Compute for each model
 		for(Model m : scene.getModels())
 		{
@@ -31,28 +34,39 @@ public class JTracer implements Raytracer
 				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				
-				if(mxmin > mxmax) Print.e(i + "(x): " + mxmin + " > " + mxmax);
-				if(mymin > mymax) Print.e(i + "(y): "+ mymin + " > " + mymax);
-				if(mzmin > mzmax) Print.e(i + "(z): " + mzmin + " > " + mzmax);
+				if(ray.getDirection().X() < 0)
+				{
+					Print.e("Swapped x");
+					temp = mxmin;
+					mxmin = mxmax;
+					mxmax = temp;
+				}
+				if(ray.getDirection().Y() < 0)
+				{
+					Print.e("Swapped y");
+					temp = mymin;
+					mymin = mymax;
+					mymax = temp;
+				}
+				if(ray.getDirection().Z() < 0)
+				{
+					Print.e("Swapped z");
+					temp = mzmin;
+					mzmin = mzmax;
+					mzmax = temp;
+				}
 				
-				//System.out.println("[" + Maths.round(mxmin, 4) + "; " + Maths.round(mxmax, 4) + "]" + "	[" + Maths.round(mymin, 4) + "; " + Maths.round(mymax, 4) + "]" + "	[" + Maths.round(mzmin, 4) + "; " + Maths.round(mzmax, 4) + "]");
+				if(mxmin > mxmax) Print.e("x: " + mxmin + " > " + mxmax);
+				if(mymin > mymax) Print.e("y: " + mymin + " > " + mymax);
+				if(mzmin > mzmax) Print.e("z: " + mzmin + " > " + mzmax);
 				
-				if(mxmin > mymax || mxmin > mzmax)
+				System.out.println("[" + Maths.round(mxmin, 5) + "; " + Maths.round(mxmax, 5) + "]" + "	[" + Maths.round(mymin, 5) + "; " + Maths.round(mymax, 5) + "]" + "	[" + Maths.round(mzmin, 5) + "; " + Maths.round(mzmax, 5) + "]");
+				
+				//Check if limits have common values
+				if(mxmin > mymax || mxmin > mzmax || mymin > mxmax || mymin > mzmax || mzmin > mxmax || mzmin > mymax)
 				{
-					pixel[0] = pixel[0] + 50;
 					continue;
 				}
-				if(mymin > mxmax || mymin > mzmax)
-				{
-					pixel[1] = pixel[1] + 50;
-					continue;
-				}
-				if(mzmin > mxmax || mzmin > mymax)
-				{
-					pixel[2] = pixel[2] + 50;
-					continue;
-				}
-				//System.out.println(ray.toString());  
 				
 				pixel[0] = 255;
 				pixel[1] = 255;
@@ -62,5 +76,4 @@ public class JTracer implements Raytracer
 		
 		return pixel;
 	}
-	
 }

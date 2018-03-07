@@ -13,10 +13,12 @@ import com.github.jannled.raytracer.Scene;
 import com.github.jannled.raytracer.model.Model;
 import com.github.jannled.raytracer.model.OBJLoader;
 
-public class Main
+public class Main implements Runnable
 {	
-	public static final int WIDTH = 32;
-	public static final int HEIGHT = 32;
+	public static final int WIDTH	= 8;
+	public static final int HEIGHT	= 8;
+	
+	public boolean running = true;
 	
 	Camera camera = new Camera(WIDTH, HEIGHT, 10);
 	Scene scene = new Scene();
@@ -25,9 +27,8 @@ public class Main
 	
 	public Main()
 	{
-		Model m = OBJLoader.loadModel(Main.class.getResourceAsStream("TriangleHalf.obj"));
+		Model m = OBJLoader.loadModel(Main.class.getResourceAsStream("TriangleSmall.obj"));
 		scene.addModel(m);
-		camera.render(scene);
 		
 		frame = new JFrame("RayTracer CPU Test");
 		frame.setSize(WIDTH, HEIGHT);
@@ -37,13 +38,24 @@ public class Main
 		frame.setVisible(true);
 		frame.setMinimumSize(new Dimension(256, 256));
 		
-		render.repaint();
+		Thread renderThread = new Thread(this);
+		renderThread.start();
+	}
+	
+	@Override
+	public void run()
+	{
+		//while(running)
+		{
+			camera.render(scene);
+			render.repaint();
+		}
 	}
 	
 	public static void main(String[] args)
 	{
 		Print.setOutputLevel(Print.ALL);
-		Print.d(Arrays.toString(args));
+		Print.d("Launching RayTracer with arguments: " + Arrays.toString(args));
 		new Main();
 	}
 }
