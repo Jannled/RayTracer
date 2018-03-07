@@ -2,6 +2,7 @@ package com.github.jannled.raytracer.model;
 
 import java.util.Arrays;
 
+import com.github.jannled.lib.Print;
 import com.github.jannled.lib.math.Vector;
 
 public class Face 
@@ -71,5 +72,8 @@ public class Face
 		minMax[1][1] = y[y.length-1];
 		minMax[2][0] = z[0];
 		minMax[2][1] = z[z.length-1];
+		
+		if(minMax[0][0] > minMax[0][1])
+			Print.e("Fail!");
 	}
 }

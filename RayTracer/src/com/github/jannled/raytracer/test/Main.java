@@ -25,7 +25,7 @@ public class Main
 	
 	public Main()
 	{
-		Model m = OBJLoader.loadModel(Main.class.getResourceAsStream("Triangle.obj"));
+		Model m = OBJLoader.loadModel(Main.class.getResourceAsStream("TriangleHalf.obj"));
 		scene.addModel(m);
 		camera.render(scene);
 		
