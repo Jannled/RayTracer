@@ -15,8 +15,10 @@ import com.github.jannled.raytracer.model.OBJLoader;
 
 public class Main implements Runnable
 {	
-	public static final int WIDTH	= 8;
-	public static final int HEIGHT	= 8;
+	public static final int WIDTH	= 128;
+	public static final int HEIGHT	= 128;
+	
+	public static DebugPane db = new DebugPane(WIDTH * HEIGHT);
 	
 	public boolean running = true;
 	

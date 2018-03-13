@@ -15,7 +15,7 @@ public class JTracer implements Raytracer
 	 * @return The three color component.
 	 */
 	@Override
-	public int[] raytrace(Scene scene, Line ray) 
+	public int[] raytrace(Scene scene, Line ray)
 	{
 		int[] pixel = new int[3];
 		
@@ -33,6 +33,24 @@ public class JTracer implements Raytracer
 				double mymax = (m.getFaces()[i].getMax(Face.Y) - ray.getStart().Y()) / ray.getDirection().Y();
 				double mzmin = (m.getFaces()[i].getMin(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
 				double mzmax = (m.getFaces()[i].getMax(Face.Z) - ray.getStart().Z()) / ray.getDirection().Z();
+				
+				if(Double.isInfinite(mxmin) || Double.isInfinite(mxmax))
+				{
+					Print.e("Infinity for x");
+					//continue;
+				}
+				
+				if(Double.isInfinite(mymin) || Double.isInfinite(mymax))
+				{
+					Print.e("Infinity for y");
+					//continue;
+				}
+				
+				if(Double.isInfinite(mzmin) || Double.isInfinite(mzmax))
+				{
+					Print.e("Infinity for z");
+					//continue;
+				}
 				
 				if(ray.getDirection().X() < 0)
 				{
